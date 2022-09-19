@@ -1,0 +1,10 @@
+    oRG $AB 
+eT1 SWI  
+et2 BITA 23 
+ 
+12et3 BITA 23 
+    ADcA 332
+    bra ET1
+    END
+
+Deberas si funciona
