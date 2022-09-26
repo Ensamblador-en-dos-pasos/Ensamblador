@@ -1,0 +1,6 @@
+Et2 EQU 69    
+    ORG 0
+    RMW 34
+    FCC "Hola jotos"
+    DW 5
+    END

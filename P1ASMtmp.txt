@@ -1,0 +1,6 @@
+ET2&EQU&69&
+&ORG&0
+&RMW&34
+&FCC&"HOLA&JOTOS"
+&DW&5
+&END
