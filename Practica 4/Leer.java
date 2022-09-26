@@ -198,16 +198,34 @@ public class Leer {
         } else if(encontrado5) {
             et = null;
             codop = arr[1];
+            int cont = 0;
             for(int i = 2; i<arr.length;i++){
-                oper = oper.concat(arr[i]);
+                
+                if(cont!=0){
+                    oper = oper.concat(" ");
+                    oper = oper.concat(arr[i]);
+                }else{
+                    oper = oper.concat(arr[i]);
+                    cont++;
+                }
+                
             }
             caso = 2;
             
         }else if(encontrado6){
             et = arr[0];
             codop = arr[1];
+            int cont = 0;
             for(int i = 2; i<arr.length;i++){
-                oper = oper.concat(arr[i]);
+                
+                if(cont!=0){
+                    oper = oper.concat(" ");
+                    oper = oper.concat(arr[i]);
+                }else{
+                    oper = oper.concat(arr[i]);
+                    cont++;
+                }
+                
             }
             caso = 2;
         }

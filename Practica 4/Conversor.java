@@ -46,4 +46,10 @@ public class Conversor {
         int num = Integer.parseInt(result);
         return num;
     }
+
+    //Retorna el hex de un decimal
+    public String dectohex(int dec){
+        String num = Integer.toHexString(dec);
+        return num;
+    }
 }

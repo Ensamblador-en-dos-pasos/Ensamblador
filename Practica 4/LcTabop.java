@@ -12,7 +12,10 @@ import java.util.Scanner;
  */
 public class LcTabop {
     Operando valOpe = new Operando();
+    Conversor conv = new Conversor();
     int Contloc, ContlocEqu = 0;
+    int dec = 0;
+    String dec1 = "";
 
     /**
      * Metodo para buscar el codigo de operacion que se encuentra en el Tabop
@@ -43,14 +46,15 @@ public class LcTabop {
             TMP = new PrintWriter(new FileWriter(tmp, true));
 
             while (sc.hasNextLine()) {// Leer hasta que temine
-                
+
                 String palabra = sc.next();
 
                 if (palabra.equals(codop)) {
                     ope = sc.nextInt();
 
                     switch (ope) {
-                        case 1: case 0:// Caso de las directivas del tabop
+                        case 1:
+                        case 0:// Caso de las directivas del tabop
                             addr = sc.next();
                             cmc = sc.next();
                             bpc = sc.nextInt();
@@ -116,15 +120,71 @@ public class LcTabop {
                         case 3:// Directivas
                             addr = sc.next();
                             bytes = sc.nextInt();
+
+                            if (addr.equals("Dire_Inic")) {
+                                switch (valOpe.basesnum(oper)) {
+                                    case 1:
+                                        dec = conv.hextodec(oper);
+                                        if (valOpe.rangeInd16(dec)) {
+                                            dec1 = conv.dectohex(dec);
+                                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
+                                            TMP.println();
+                                            ban = true;
+                                        }
+
+                                        break;
+                                    case 2:
+                                        dec = conv.octtodec(oper);
+                                        if (valOpe.rangeInd16(dec)) {
+                                            dec1 = conv.dectohex(dec);
+                                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
+                                            TMP.println();
+                                            ban = true;
+                                        }
+
+                                        break;
+                                    case 3:
+                                        dec = conv.bintodec(oper);
+                                        if (valOpe.rangeInd16(dec)) {
+                                            dec1 = conv.dectohex(dec);
+                                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
+                                            TMP.println();
+                                            ban = true;
+                                        }
+
+                                        break;
+                                    case 4:
+                                        dec = Integer.parseInt(oper);
+                                        if (valOpe.rangeInd16(dec)) {
+                                            dec1 = conv.dectohex(dec);
+                                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
+                                            TMP.println();
+                                            ban = true;
+                                        }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            } else {
+                                TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
+                                TMP.println();
+                                if (et != null) {
+                                    TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
+                                    TABSIM.println();
+                                }
+                                ban = true;
+                            }
                             break;
                         case 4:// Equate
                             addr = sc.next();
                             bytes = sc.nextInt();
                             // Convertir hexa
                             ContlocEqu = Integer.parseInt(oper);
-                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Valor EQU", ContlocEqu, et, codop, oper);
+                            dec1 = conv.dectohex(ContlocEqu);
+                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Valor EQU", dec1, et, codop, oper);
                             TMP.println();
-                            TABSIM.printf("%s\t %s\t %s\t", "EQU(Etiqueta absoluta)", et, ContlocEqu);
+                            TABSIM.printf("%s\t %s\t %s\t", "EQU(Etiqueta absoluta)", et, dec1);
                             TABSIM.println();
 
                             ban = true;
@@ -139,16 +199,77 @@ public class LcTabop {
                                 TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
                                 TABSIM.println();
                             }
-                            Contloc = Contloc + (oper.length()-1);
+                            Contloc = Contloc + (oper.length() - 2);
                             ban = true;
 
                             break;
                         case 6:// Memoria
                             addr = sc.next();
                             bytes = sc.nextInt();
-                            //Conversor de bases
-                            
-                            //Multiplicarlo por 1 o 2 dependiendo los bytes
+
+                            switch (valOpe.basesnum(oper)) {
+                                case 1:
+                                    dec = conv.hextodec(oper);
+                                    if (valOpe.rangeInd16(dec)) {
+                                        dec1 = conv.dectohex(dec);
+                                        TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                        TMP.println();
+                                        if (et != null) {
+                                            TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
+                                            TABSIM.println();
+                                        }
+                                        ban = true;
+                                    }
+
+                                    break;
+                                case 2:
+                                    dec = conv.octtodec(oper);
+                                    if (valOpe.rangeInd16(dec)) {
+                                        dec1 = conv.dectohex(dec);
+                                        TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                        TMP.println();
+                                        if (et != null) {
+                                            TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
+                                            TABSIM.println();
+                                        }
+                                        ban = true;
+                                    }
+
+                                    break;
+                                case 3:
+                                    dec = conv.bintodec(oper);
+                                    if (valOpe.rangeInd16(dec)) {
+                                        dec1 = conv.dectohex(dec);
+                                        TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                        TMP.println();
+                                        if (et != null) {
+                                            TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
+                                            TABSIM.println();
+                                        }
+                                        ban = true;
+                                    }
+
+                                    break;
+                                case 4:
+                                    dec = Integer.parseInt(oper);
+                                    if (valOpe.rangeInd16(dec)) {
+                                        dec1 = conv.dectohex(dec);
+                                        TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                        TMP.println();
+                                        if (et != null) {
+                                            TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
+                                            TABSIM.println();
+                                        }
+                                        ban = true;
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            // Conversor de bases
+
+                            // Multiplicarlo por 1 o 2 dependiendo los bytes
                             switch (bytes) {
                                 case 1:
                                     TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
@@ -157,9 +278,9 @@ public class LcTabop {
                                         TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
                                         TABSIM.println();
                                     }
-                                    Contloc = Contloc + (Integer.parseInt(oper)*1);
+                                    Contloc = Contloc + (Integer.parseInt(oper) * 1);
                                     ban = true;
-                                    
+
                                     break;
                                 case 2:
                                     TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
@@ -168,10 +289,10 @@ public class LcTabop {
                                         TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
                                         TABSIM.println();
                                     }
-                                    Contloc = Contloc + (Integer.parseInt(oper)*2);
+                                    Contloc = Contloc + (Integer.parseInt(oper) * 2);
                                     ban = true;
                                     break;
-                            
+
                                 default:
                                     break;
                             }
