@@ -463,7 +463,12 @@ public class Operando {
             return 0;
         }
     }
-
+    /**
+     * Metodo para validar las directivas
+     * checo que base numerica es y retorno el valor en hexadecimal
+     * @param operando valor del operando en cualquier base
+     * @return retorno del valor en hexadecimal mayuscula
+     */
     public String Val_directivas(String operando) {
         int dec = 0;//variable chalan para trabajar con las bases
         String hex = null;
