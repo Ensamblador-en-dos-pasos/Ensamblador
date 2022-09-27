@@ -1,5 +1,6 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /**
  * @author Isaac Ulises
  * @author Saul
@@ -153,52 +154,52 @@ public class Operando {
             switch (basesnum(cadena)) {
                 case 1:// Hexadecimal
                     valor = conv.hextodecimm(cadena);
-                        if (range8(valor)) {
-                            cadena = "Inmediato";
-                            ban = true;
-                        } else if (range16(valor)) {
-                            cadena = "Inmediato1";
-                            ban = true;
-                        }else{
-                            System.out.println("Error, este codop debe ser de 8 o 16 bits");
-                        }
+                    if (range8(valor)) {
+                        cadena = "Inmediato";
+                        ban = true;
+                    } else if (range16(valor)) {
+                        cadena = "Inmediato1";
+                        ban = true;
+                    } else {
+                        System.out.println("Error, este codop debe ser de 8 o 16 bits");
+                    }
                     break;
                 case 2:// Octal
                     valor = conv.octtodecimm(cadena);
-                        if (range8(valor)) {
-                            cadena = "Inmediato";
-                            ban = true;
-                        } else if (range16(valor)) {
-                            cadena = "Inmediato1";
-                            ban = true;
-                        } else {
-                            System.out.println("Error, este codop debe ser de 8 o 16 bits");
-                        }
+                    if (range8(valor)) {
+                        cadena = "Inmediato";
+                        ban = true;
+                    } else if (range16(valor)) {
+                        cadena = "Inmediato1";
+                        ban = true;
+                    } else {
+                        System.out.println("Error, este codop debe ser de 8 o 16 bits");
+                    }
                     break;
                 case 3:// Binario
                     valor = conv.bintodecimm(cadena);
-                        if (range8(valor)) {
-                            cadena = "Inmediato";
-                            ban = true;
-                        } else if (range16(valor)) {
-                            cadena = "Inmediato1";
-                            ban = true;
-                        } else {
-                            System.out.println("Error, este codop debe ser de 8 o 16 bits");
-                        }
+                    if (range8(valor)) {
+                        cadena = "Inmediato";
+                        ban = true;
+                    } else if (range16(valor)) {
+                        cadena = "Inmediato1";
+                        ban = true;
+                    } else {
+                        System.out.println("Error, este codop debe ser de 8 o 16 bits");
+                    }
                     break;
                 case 4:// Decimal
                     int valor1 = conv.decimm(cadena);
                     valor = (valor1);
-                        if (range8(valor)) {
-                            cadena = "Inmediato";
-                            ban = true;
-                        }else if (range16(valor)) {
-                            cadena = "Inmediato1";
-                            ban = true;
-                        } else {
-                            System.out.println("Error, este codop debe tener ser de 8 o 16 bits");
-                        }
+                    if (range8(valor)) {
+                        cadena = "Inmediato";
+                        ban = true;
+                    } else if (range16(valor)) {
+                        cadena = "Inmediato1";
+                        ban = true;
+                    } else {
+                        System.out.println("Error, este codop debe tener ser de 8 o 16 bits");
+                    }
                     break;
                 default:
                     break;
@@ -461,5 +462,40 @@ public class Operando {
         } else {// No entra
             return 0;
         }
+    }
+
+    public String Val_directivas(String operando) {
+        int dec = 0;//variable chalan para trabajar con las bases
+        String hex = null;
+        switch (basesnum(operando)) {
+            case 1:
+            dec = conv.hextodec(operando);
+            if (rangeInd16(dec)) {
+                hex = conv.dectohex(dec);
+            }
+                break;
+            case 2:
+            dec = conv.octtodec(operando);
+            if (rangeInd16(dec)) {
+                hex = conv.dectohex(dec);
+            }
+                break;
+            case 3:
+            dec = conv.bintodec(operando);
+            if (rangeInd16(dec)) {
+                hex = conv.dectohex(dec);
+            }
+                break;
+            case 4:
+            dec = Integer.parseInt(operando);
+            if (rangeInd16(dec)) {
+                hex = conv.dectohex(dec);
+            }
+                break;
+            default:
+                hex = null;
+                break;
+        }
+        return hex.toUpperCase();
     }
 }

@@ -1,7 +1,0 @@
-EQU(Etiqueta absoluta)	 ET1	 21	
-EQU(Etiqueta absoluta)	 ET2	 16	
-EQU(Etiqueta absoluta)	 ET3	 4	
-EQU(Etiqueta absoluta)	 ET5	 3	
-ContLoc(Etiqueta relativa)	 ET6	 1	
-ContLoc(Etiqueta relativa)	 ET7	 3	
-EQU(Etiqueta absoluta)	 ET8	 2	

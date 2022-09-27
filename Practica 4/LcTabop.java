@@ -15,7 +15,7 @@ public class LcTabop {
     Conversor conv = new Conversor();
     int Contloc, ContlocEqu = 0;
     int dec = 0;
-    String dec1 = "";
+    String dec1 = "", dec2 = "";
 
     /**
      * Metodo para buscar el codigo de operacion que se encuentra en el Tabop
@@ -68,15 +68,17 @@ public class LcTabop {
 
                             addr1 = valOpe.valOperando(oper, ope, addr2);
                             if (addr1.equals(addr)) {
-
                                 if (EOpe(ope, oper)) {
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
                                     TMP.println();
                                     if (et != null) {
-                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
+                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
                                         TABSIM.println();
                                     }
-                                    Contloc = Contloc + tb;
+                                    //Metodos para sumar el operando y quese cargue a la siguiente direccion
+                                    dec = tb + conv.hextodec(dec1);
+                                    dec1 = conv.dectohex(dec);
+                                    dec1 = dec1.toUpperCase();//Convierte el valor de dec1 a mayuscula
                                     ban = true;
                                 }
                             }
@@ -87,29 +89,30 @@ public class LcTabop {
                             bytes = sc.nextInt();
                             switch (bytes) {
                                 case 1:
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
                                     TMP.println();
                                     if (et != null) {
-                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
+                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
                                         TABSIM.println();
                                     }
-                                    Contloc = Contloc + 1;
+                                    //Metodos para sumar el operando y quese cargue a la siguiente direccion
+                                    dec = 1 + conv.hextodec(dec1);
+                                    dec1 = conv.dectohex(dec);
+                                    dec1 = dec1.toUpperCase();//Convierte el valor de dec1 a mayuscula
                                     ban = true;
-                                    sc.nextInt();
-                                    sc.nextInt();
                                     break;
                                 case 2:
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
                                     TMP.println();
                                     if (et != null) {
-                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
+                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
                                         TABSIM.println();
                                     }
-                                    Contloc = Contloc + 2;
+                                    //Metodos para sumar el operando y quese cargue a la siguiente direccion
+                                    dec = 2 + conv.hextodec(dec1);
+                                    dec1 = conv.dectohex(dec);
+                                    dec1 = dec1.toUpperCase();//Convierte el valor de dec1 a mayuscula
                                     ban = true;
-                                    sc.nextInt();
-                                    sc.nextInt();
-
                                     break;
 
                                 default:
@@ -122,55 +125,15 @@ public class LcTabop {
                             bytes = sc.nextInt();
 
                             if (addr.equals("Dire_Inic")) {
-                                switch (valOpe.basesnum(oper)) {
-                                    case 1:
-                                        dec = conv.hextodec(oper);
-                                        if (valOpe.rangeInd16(dec)) {
-                                            dec1 = conv.dectohex(dec);
-                                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
-                                            TMP.println();
-                                            ban = true;
-                                        }
-
-                                        break;
-                                    case 2:
-                                        dec = conv.octtodec(oper);
-                                        if (valOpe.rangeInd16(dec)) {
-                                            dec1 = conv.dectohex(dec);
-                                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
-                                            TMP.println();
-                                            ban = true;
-                                        }
-
-                                        break;
-                                    case 3:
-                                        dec = conv.bintodec(oper);
-                                        if (valOpe.rangeInd16(dec)) {
-                                            dec1 = conv.dectohex(dec);
-                                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
-                                            TMP.println();
-                                            ban = true;
-                                        }
-
-                                        break;
-                                    case 4:
-                                        dec = Integer.parseInt(oper);
-                                        if (valOpe.rangeInd16(dec)) {
-                                            dec1 = conv.dectohex(dec);
-                                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
-                                            TMP.println();
-                                            ban = true;
-                                        }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
+                                dec1 =valOpe.Val_directivas(oper);//Examina el valor y lo convierte a hexadecimal
+                                TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
+                                TMP.println();
+                                ban = true;
                             } else {
-                                TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
+                                TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
                                 TMP.println();
                                 if (et != null) {
-                                    TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
+                                    TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
                                     TABSIM.println();
                                 }
                                 ban = true;
@@ -181,10 +144,10 @@ public class LcTabop {
                             bytes = sc.nextInt();
                             // Convertir hexa
                             ContlocEqu = Integer.parseInt(oper);
-                            dec1 = conv.dectohex(ContlocEqu);
-                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Valor EQU", dec1, et, codop, oper);
+                            dec2 = conv.dectohex(ContlocEqu);//Examina el valor y lo convierte a hexadecimal
+                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Valor EQU", dec2, et, codop, oper);
                             TMP.println();
-                            TABSIM.printf("%s\t %s\t %s\t", "EQU(Etiqueta absoluta)", et, dec1);
+                            TABSIM.printf("%s\t %s\t %s\t", "EQU(Etiqueta absoluta)", et, dec2);
                             TABSIM.println();
 
                             ban = true;
@@ -193,103 +156,55 @@ public class LcTabop {
                         case 5:// FCC
                             addr = sc.next();
                             bytes = sc.nextInt();
-                            TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
+                            TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
                             TMP.println();
                             if (et != null) {
-                                TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
+                                TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
                                 TABSIM.println();
                             }
-                            Contloc = Contloc + (oper.length() - 2);
+                            //Metodos para sumar el operando y quese cargue a la siguiente direccion
+                            dec = (oper.length()-2) + conv.hextodec(dec1);
+                            dec1 = conv.dectohex(dec);
+                            dec1 = dec1.toUpperCase();//Convierte el valor de dec1 a mayuscula
+
                             ban = true;
 
                             break;
                         case 6:// Memoria
                             addr = sc.next();
                             bytes = sc.nextInt();
-
-                            switch (valOpe.basesnum(oper)) {
-                                case 1:
-                                    dec = conv.hextodec(oper);
-                                    if (valOpe.rangeInd16(dec)) {
-                                        dec1 = conv.dectohex(dec);
-                                        TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
-                                        TMP.println();
-                                        if (et != null) {
-                                            TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
-                                            TABSIM.println();
-                                        }
-                                        ban = true;
-                                    }
-
-                                    break;
-                                case 2:
-                                    dec = conv.octtodec(oper);
-                                    if (valOpe.rangeInd16(dec)) {
-                                        dec1 = conv.dectohex(dec);
-                                        TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
-                                        TMP.println();
-                                        if (et != null) {
-                                            TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
-                                            TABSIM.println();
-                                        }
-                                        ban = true;
-                                    }
-
-                                    break;
-                                case 3:
-                                    dec = conv.bintodec(oper);
-                                    if (valOpe.rangeInd16(dec)) {
-                                        dec1 = conv.dectohex(dec);
-                                        TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
-                                        TMP.println();
-                                        if (et != null) {
-                                            TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
-                                            TABSIM.println();
-                                        }
-                                        ban = true;
-                                    }
-
-                                    break;
-                                case 4:
-                                    dec = Integer.parseInt(oper);
-                                    if (valOpe.rangeInd16(dec)) {
-                                        dec1 = conv.dectohex(dec);
-                                        TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
-                                        TMP.println();
-                                        if (et != null) {
-                                            TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
-                                            TABSIM.println();
-                                        }
-                                        ban = true;
-                                    }
-                                    break;
-
-                                default:
-                                    break;
-                            }
                             // Conversor de bases
 
                             // Multiplicarlo por 1 o 2 dependiendo los bytes
                             switch (bytes) {
                                 case 1:
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
+                                    
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
                                     TMP.println();
                                     if (et != null) {
-                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
+                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
                                         TABSIM.println();
                                     }
-                                    Contloc = Contloc + (Integer.parseInt(oper) * 1);
+                                    //Convertir el operando a hexadecimal
+                                    oper = valOpe.Val_directivas(oper);
+                                    dec = (conv.hextodec(oper)*1) + conv.hextodec(dec1);//Suma en y multiplica en decimal
+                                    dec1 = conv.dectohex(dec);
+                                    dec1 = dec1.toUpperCase();
                                     ban = true;
 
                                     break;
                                 case 2:
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", Contloc, et, codop, oper);
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
                                     TMP.println();
                                     if (et != null) {
-                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, Contloc);
+                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
                                         TABSIM.println();
                                     }
-                                    Contloc = Contloc + (Integer.parseInt(oper) * 2);
+                                    //Convertir el operando a hexadecimal
+                                    oper = valOpe.Val_directivas(oper);
+                                    dec = (conv.hextodec(oper)*2) + conv.hextodec(dec1);//Suma en y multiplica en decimal
+                                    dec1 = conv.dectohex(dec);
+                                    dec1 = dec1.toUpperCase();
                                     ban = true;
                                     break;
 

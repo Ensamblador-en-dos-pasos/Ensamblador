@@ -1,10 +1,3 @@
-Valor EQU	 21	 ET1	 EQU	 33
-Valor EQU	 16	 ET2	 EQU	 22
-Dir_Inic	 0	 null	 ORG	 $0
-Valor EQU	 4	 ET3	 EQU	 4
-Valor EQU	 3	 ET5	 EQU	 3
-ContLoc	 0	 null	 SWI	 null
-ContLoc	 1	 ET6	 ADCA	 #3
-ContLoc	 3	 ET7	 ADCA	 #4
-Valor EQU	 2	 ET8	 EQU	 2
-ContLoc	 5	 null	 END	 null
+Dir_Inic	 B	 null	 ORG	 11
+ContLoc	 B	 null	 RMW	 @77
+ContLoc	 89	 null	 END	 null
