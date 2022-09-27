@@ -49,6 +49,14 @@ public class Leer {
         PrintWriter out = null;
 
         try {// abre el fichero
+            /*Creo variables para los archivos y los elimino para que se puedan sobreescribir 
+            en dado caso de que esten creados*/
+            File tmp = new File("TMP.txt");
+            File tab = new File("TABSIM.txt");
+            if (tmp.exists() || tab.exists()) {
+                tmp.delete();
+                tmp.delete();
+            }
 
             // Creo un nuevo arcivo "Temporal" de escritura
             out = new PrintWriter(new FileWriter(nom1));

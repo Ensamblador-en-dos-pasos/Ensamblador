@@ -9,18 +9,10 @@ import java.io.IOException;
  */
 public class Ensamblador {
         public static void main(String[] args) throws FileNotFoundException, IOException {
-                
-                //Leer read = new Leer();
-                //read.leerArc("P2ASM.txt");
-                //read.Lcc();
-                //read.buscar();
-                Operando oper = new Operando();
-                Conversor con = new Conversor();
-                String val = oper.Val_directivas("@77");
-                int valor = (con.hextodec(val)*2)+ 11;
-                val = con.dectohex(valor);
-                System.out.println(val);
-
+                Leer read = new Leer();
+                read.leerArc("P2ASM.txt");
+                read.Lcc();
+                read.buscar();
         }
         
 }
