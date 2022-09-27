@@ -79,6 +79,7 @@ public class LcTabop {
                                     dec = tb + conv.hextodec(dec1);
                                     dec1 = conv.dectohex(dec);
                                     dec1 = dec1.toUpperCase();//Convierte el valor de dec1 a mayuscula
+                                    dec1 = ceros(dec1);
                                     ban = true;
                                 }
                             }
@@ -125,11 +126,14 @@ public class LcTabop {
                             bytes = sc.nextInt();
 
                             if (addr.equals("Dire_Inic")) {
+                                
                                 dec1 =valOpe.Val_directivas(oper);//Examina el valor y lo convierte a hexadecimal
+                                dec1 = ceros(dec1);
                                 TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
                                 TMP.println();
                                 ban = true;
                             } else {
+                                dec1 = ceros(dec1);
                                 TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
                                 TMP.println();
                                 if (et != null) {
@@ -145,6 +149,7 @@ public class LcTabop {
                             // Convertir hexa
                             ContlocEqu = Integer.parseInt(oper);
                             dec2 = conv.dectohex(ContlocEqu);//Examina el valor y lo convierte a hexadecimal
+                            dec1 = ceros(dec1);
                             TMP.printf("%s\t %s\t %s\t %s\t %s", "Valor EQU", dec2, et, codop, oper);
                             TMP.println();
                             TABSIM.printf("%s\t %s\t %s\t", "EQU(Etiqueta absoluta)", et, dec2);
@@ -166,7 +171,7 @@ public class LcTabop {
                             dec = (oper.length()-2) + conv.hextodec(dec1);
                             dec1 = conv.dectohex(dec);
                             dec1 = dec1.toUpperCase();//Convierte el valor de dec1 a mayuscula
-
+                            dec1 = ceros(dec1);
                             ban = true;
 
                             break;
@@ -205,6 +210,7 @@ public class LcTabop {
                                     dec = (conv.hextodec(oper)*2) + conv.hextodec(dec1);//Suma en y multiplica en decimal
                                     dec1 = conv.dectohex(dec);
                                     dec1 = dec1.toUpperCase();
+                                    dec1 = ceros(dec1);
                                     ban = true;
                                     break;
 
@@ -261,5 +267,21 @@ public class LcTabop {
                 break;
         }
         return ret;
+    }
+    private String ceros(String valor) {
+        switch (valor.length()) {
+            case 1:
+                valor = "000"+valor;
+                break;
+                case 2:
+                valor = "00"+valor;
+                break;
+                case 3:
+                valor = "0"+valor;
+                break;
+            default:
+                break;
+        }
+        return valor;
     }
 }

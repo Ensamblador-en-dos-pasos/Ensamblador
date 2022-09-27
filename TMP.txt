@@ -1,4 +1,4 @@
-Dir_Inic	 B	 null	 ORG	 11
-ContLoc	 B	 null	 RMW	 @77
-ContLoc	 89	 ET1	 ADCA	 2
-ContLoc	 8B	 null	 END	 null
+Dir_Inic	 000B	 null	 ORG	 11
+ContLoc	 000B	 null	 RMW	 @77
+ContLoc	 0089	 ET1	 ADCA	 2
+ContLoc	 008B	 null	 END	 null
