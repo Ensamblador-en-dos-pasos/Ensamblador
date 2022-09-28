@@ -268,15 +268,20 @@ public class LcTabop {
         }
         return ret;
     }
+    /**
+     * Metodo para crear cero dependiendo la longitud del hexadecimal
+     * @param valor Cadena en hexadecimal
+     * @return El Hexadecimal con los ceros necesarios a la derecha
+     */
     private String ceros(String valor) {
         switch (valor.length()) {
-            case 1:
+            case 1://un solo hexadecimal en la direccion
                 valor = "000"+valor;
                 break;
-                case 2:
+                case 2://Dos hexadecimales en la direccion
                 valor = "00"+valor;
                 break;
-                case 3:
+                case 3://Tres hexadecimales en la direccion
                 valor = "0"+valor;
                 break;
             default:
