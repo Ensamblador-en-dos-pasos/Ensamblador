@@ -1,4 +1,5 @@
 Dir_Inic	 000B	 null	 ORG	 11
 ContLoc	 000B	 null	 RMW	 @77
 ContLoc	 0089	 ET1	 ADCA	 2
-ContLoc	 008B	 null	 END	 null
+ContLoc	 008B	 null	 LDAA	 $FFFF
+ContLoc	 008E	 null	 END	 null
