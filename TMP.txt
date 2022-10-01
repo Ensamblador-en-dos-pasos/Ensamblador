@@ -2,4 +2,5 @@ Dir_Inic	 0000	 null	 ORG	 $0	 Dire_Inic	 0
 ContLoc	 0000	 null	 SWI	 null	 Inherente	 3F
 ContLoc	 0001	 null	 LDAA	 85	 Directo	 96
 ContLoc	 0003	 null	 LDAA	 $FF	 Directo	 96
-ContLoc	 0005	 null	 END	 null	 Directiva	 0
+ContLoc	 0005	 null	 LDY	 #$377	 Inmediato1	 CD
+ContLoc	 0008	 null	 END	 null	 Directiva	 0

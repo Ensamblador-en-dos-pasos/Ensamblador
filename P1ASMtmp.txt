@@ -2,5 +2,5 @@
 &SWI
 &LDAA&85
 &LDAA&$FF
-&LDY&#@377
+&LDY&#$377
 &END

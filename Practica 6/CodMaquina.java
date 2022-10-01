@@ -71,7 +71,7 @@ public class CodMaquina {
                             case 1:// Hex
                                 base = conv.hextodecimm(oper);
                                 cmf = conv.dectohex(base);
-                                System.out.println(" CMF: " + oper);
+                                System.out.println(" CMF: " + cmf);
                                 break;
                             case 2:// Oct
                                 base = conv.octtodecimm(oper);
