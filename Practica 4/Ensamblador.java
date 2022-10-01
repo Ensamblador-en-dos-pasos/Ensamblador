@@ -10,9 +10,11 @@ import java.io.IOException;
 public class Ensamblador {
         public static void main(String[] args) throws FileNotFoundException, IOException {
                 Leer read = new Leer();
+                CodMaquina cod= new CodMaquina();
                 read.leerArc("P2ASM.txt");
                 read.Lcc();
                 read.buscar();
+                cod.cMaquina();
         }
         
 }

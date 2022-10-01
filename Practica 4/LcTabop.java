@@ -37,7 +37,7 @@ public class LcTabop {
         PrintWriter TABSIM = null;
         PrintWriter TMP = null;
         boolean ban = false;// Bandera para salir del while
-        int ope, bpc = 0, tb, addr2 = 0, bytes = 0;// Es 1 0 que indica si lleva o no operador
+        int ope, bpc = 0, tb, addr2 = 0, bytes = 0, base;// Es 1 0 que indica si lleva o no operador
         String addr, addr1, cmc;
 
         try {
@@ -45,7 +45,7 @@ public class LcTabop {
             TABSIM = new PrintWriter(new FileWriter(tab, true));
             TMP = new PrintWriter(new FileWriter(tmp, true));
 
-            while (sc.hasNextLine()) {// Leer hasta que temine
+            while (sc.hasNextLine()) {// Leer hasta que temine&
 
                 String palabra = sc.next();
 
@@ -66,16 +66,16 @@ public class LcTabop {
                                 addr2 = 1;
                             }
 
-                            addr1 = valOpe.valOperando(oper, ope, addr2);
+                            addr1 = valOpe.valOperando(oper, ope, addr2, bpc, addr);
                             if (addr1.equals(addr)) {
                                 if (EOpe(ope, oper)) {
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper, addr, cmc);
                                     TMP.println();
                                     if (et != null) {
-                                        TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
+                                        TABSIM.printf("%s\t %s\t %s", "ContLoc(Etiqueta relativa)", et, dec1);
                                         TABSIM.println();
                                     }
-                                    //Metodos para sumar el operando y quese cargue a la siguiente direccion
+                                    //Metodos para sumar el operando y que se cargue a la siguiente direccion
                                     dec = tb + conv.hextodec(dec1);
                                     dec1 = conv.dectohex(dec);
                                     dec1 = dec1.toUpperCase();//Convierte el valor de dec1 a mayuscula
@@ -90,7 +90,7 @@ public class LcTabop {
                             bytes = sc.nextInt();
                             switch (bytes) {
                                 case 1:
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper, addr, bytes);
                                     TMP.println();
                                     if (et != null) {
                                         TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
@@ -103,7 +103,7 @@ public class LcTabop {
                                     ban = true;
                                     break;
                                 case 2:
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s\t", "ContLoc", dec1, et, codop, oper, addr, bytes);
                                     TMP.println();
                                     if (et != null) {
                                         TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
@@ -129,15 +129,15 @@ public class LcTabop {
                                 
                                 dec1 =valOpe.Val_directivas(oper);//Examina el valor y lo convierte a hexadecimal
                                 dec1 = ceros(dec1);
-                                TMP.printf("%s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper);
+                                TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s", "Dir_Inic", dec1, et, codop, oper, addr, bytes);
                                 TMP.println();
                                 ban = true;
                             } else {
                                 dec1 = ceros(dec1);
-                                TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper, addr, bytes);
                                 TMP.println();
                                 if (et != null) {
-                                    TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
+                                    TABSIM.printf("%s\t %s\t %s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1, addr, bytes);
                                     TABSIM.println();
                                 }
                                 ban = true;
@@ -150,7 +150,7 @@ public class LcTabop {
                             ContlocEqu = Integer.parseInt(oper);
                             dec2 = conv.dectohex(ContlocEqu);//Examina el valor y lo convierte a hexadecimal
                             dec1 = ceros(dec1);
-                            TMP.printf("%s\t %s\t %s\t %s\t %s", "Valor EQU", dec2, et, codop, oper);
+                            TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s\t", "Valor EQU", dec2, et, codop, oper, addr, bytes);
                             TMP.println();
                             TABSIM.printf("%s\t %s\t %s\t", "EQU(Etiqueta absoluta)", et, dec2);
                             TABSIM.println();
@@ -161,7 +161,7 @@ public class LcTabop {
                         case 5:// FCC
                             addr = sc.next();
                             bytes = sc.nextInt();
-                            TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                            TMP.printf("%s\t %s\t %s\t %s\t %s\t %S\t %s\t", "ContLoc", dec1, et, codop, oper, addr, bytes);
                             TMP.println();
                             if (et != null) {
                                 TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
@@ -184,7 +184,7 @@ public class LcTabop {
                             switch (bytes) {
                                 case 1:
                                     
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s\t", "ContLoc", dec1, et, codop, oper, addr, bytes);
                                     TMP.println();
                                     if (et != null) {
                                         TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
@@ -199,7 +199,7 @@ public class LcTabop {
 
                                     break;
                                 case 2:
-                                    TMP.printf("%s\t %s\t %s\t %s\t %s", "ContLoc", dec1, et, codop, oper);
+                                    TMP.printf("%s\t %s\t %s\t %s\t %s\t %s\t %s\t", "ContLoc", dec1, et, codop, oper, addr, bytes);
                                     TMP.println();
                                     if (et != null) {
                                         TABSIM.printf("%s\t %s\t %s\t", "ContLoc(Etiqueta relativa)", et, dec1);
@@ -215,6 +215,7 @@ public class LcTabop {
                                     break;
 
                                 default:
+                                    
                                     break;
                             }
                             break;
@@ -225,7 +226,7 @@ public class LcTabop {
                 }
             }
             if (!ban) {
-                System.out.println(" Error, CODOP no encontrado " + "[" + codop + "]");
+                System.out.println("Error, CODOP no encontrado " + "[" + codop + "]");
             }
         } finally {
             if (sc != null) {

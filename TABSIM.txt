@@ -1,8 +1,1 @@
-ContLoc(Etiqueta relativa)	 ET1	 89	
-ContLoc(Etiqueta relativa)	 ET1	 B0089	
-ContLoc(Etiqueta relativa)	 ET1	 B0089	
-ContLoc(Etiqueta relativa)	 ET1	 89	
-ContLoc(Etiqueta relativa)	 ET1	 89	
-ContLoc(Etiqueta relativa)	 ET1	 89	
-ContLoc(Etiqueta relativa)	 ET1	 0089	
-ContLoc(Etiqueta relativa)	 ET1	 0089	
+	

@@ -1,5 +1,6 @@
-    ORG 11
-    RMW @77
-ET1    ADCA 2
-    LDAA $FFFF
+    ORG $0
+    SWI
+    LDAA 85
+    LDAA $FF
+    LDY #@377
     END

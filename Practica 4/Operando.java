@@ -18,7 +18,7 @@ public class Operando {
      * @param oper   0 no operando 1 si operando
      * @return Retorna el ADDR
      */
-    public String valOperando(String cadena, Integer oper, Integer addr2) {
+    public String valOperando(String cadena, Integer oper, Integer addr2, int bpc, String addr) {
         if (cadena == null) {
             cadena = "";
         }
@@ -153,53 +153,145 @@ public class Operando {
         } else if (encontrado7) {// Inmediato
             switch (basesnum(cadena)) {
                 case 1:// Hexadecimal
-                    valor = conv.hextodecimm(cadena);
-                    if (range8(valor)) {
-                        cadena = "Inmediato";
-                        ban = true;
-                    } else if (range16(valor)) {
-                        cadena = "Inmediato1";
-                        ban = true;
-                    } else {
-                        System.out.println("Error, este codop debe ser de 8 o 16 bits");
+                    if (addr.equals("Inmediato") || addr.equals("Inmediato1")) {
+                        valor = conv.hextodecimm(cadena);
+                        switch (bpc) {
+                            case 1:
+                                if (range8(valor)) {
+                                    cadena = "Inmediato";
+                                }else{
+                                    System.out.println("Error, el operando debe de ser de 8 bits " + cadena);
+                                }
+                                ban = true;
+                                break;
+                            case 2:
+                                if (range16(valor)) {
+                                    cadena = "Inmediato1";
+                                } else {
+                                    System.out.println("Error, el operando debe ser de 16 bits "+ cadena);
+                                }
+                                ban = true;
+                                break;
+                            case 3:
+                                ban = true;
+                                break;
+
+                            default:
+                                if (cadena != "Inmediato" || cadena != "Inmediato1") {
+                                    System.out.println("Error, el operando no está en el rango de bits");
+                                }
+                                ban = true;
+                                break;
+                        }
+                    
                     }
+                    ban = true;
                     break;
                 case 2:// Octal
-                    valor = conv.octtodecimm(cadena);
-                    if (range8(valor)) {
-                        cadena = "Inmediato";
-                        ban = true;
-                    } else if (range16(valor)) {
-                        cadena = "Inmediato1";
-                        ban = true;
-                    } else {
-                        System.out.println("Error, este codop debe ser de 8 o 16 bits");
+                    if (addr.equals("Inmediato") || addr.equals("Inmediato1")) {
+                        valor = conv.octtodecimm(cadena);
+                        switch (bpc) {
+                            case 1:
+                                if (range8(valor)) {
+                                    cadena = "Inmediato";
+                                }else{
+                                    System.out.println("Error, el operando debe de ser de 8 bits " + cadena);
+                                }
+                                ban = true;
+                                break;
+                            case 2:
+                                if (range16(valor)) {
+                                    cadena = "Inmediato1";
+                                } else {
+                                    System.out.println("Error, el operando debe ser de 16 bits "+ cadena);
+                                }
+                                ban = true;
+                                break;
+                            case 3:
+                                ban = true;
+                                break;
+
+                            default:
+                                if (cadena != "Inmediato" || cadena != "Inmediato1") {
+                                    System.out.println("Error, el operando no está en el rango de bits");
+                                }
+                                ban = true;
+                                break;
+                        }
+                    
                     }
+                    ban = true;
                     break;
                 case 3:// Binario
-                    valor = conv.bintodecimm(cadena);
-                    if (range8(valor)) {
-                        cadena = "Inmediato";
-                        ban = true;
-                    } else if (range16(valor)) {
-                        cadena = "Inmediato1";
-                        ban = true;
-                    } else {
-                        System.out.println("Error, este codop debe ser de 8 o 16 bits");
+                    if (addr.equals("Inmediato") || addr.equals("Inmediato1")) {
+                        valor = conv.bintodecimm(cadena);
+                        switch (bpc) {
+                            case 1:
+                                if (range8(valor)) {
+                                    cadena = "Inmediato";
+                                }else{
+                                    System.out.println("Error, el operando debe de ser de 8 bits " + cadena);
+                                }
+                                ban = true;
+                                break;
+                            case 2:
+                                if (range16(valor)) {
+                                    cadena = "Inmediato1";
+                                } else {
+                                    System.out.println("Error, el operando debe ser de 16 bits "+ cadena);
+                                }
+                                ban = true;
+                                break;
+                            case 3:
+                                ban = true;
+                                break;
+
+                            default:
+                                if (cadena != "Inmediato" || cadena != "Inmediato1") {
+                                    System.out.println("Error, el operando no está en el rango de bits");
+                                }
+                                ban = true;
+                                break;
+                        }
+                    
                     }
+                    ban = true;
                     break;
                 case 4:// Decimal
-                    int valor1 = conv.decimm(cadena);
-                    valor = (valor1);
-                    if (range8(valor)) {
-                        cadena = "Inmediato";
-                        ban = true;
-                    } else if (range16(valor)) {
-                        cadena = "Inmediato1";
-                        ban = true;
-                    } else {
-                        System.out.println("Error, este codop debe tener ser de 8 o 16 bits");
+                    if (addr.equals("Inmediato") || addr.equals("Inmediato1")) {
+                        int valor1 = conv.decimm(cadena);
+                        valor = (valor1);
+                        switch (bpc) {
+                            case 1:
+                                if (range8(valor)) {
+                                    cadena = "Inmediato";
+                                }else{
+                                    System.out.println("Error, el operando debe de ser de 8 bits " + cadena);
+                                }
+                                ban = true;
+                                break;
+                            case 2:
+                                if (range16(valor)) {
+                                    cadena = "Inmediato1";
+                                } else {
+                                    System.out.println("Error, el operando debe ser de 16 bits "+ cadena);
+                                }
+                                ban = true;
+                                break;
+                            case 3:
+                                ban = true;
+                                break;
+
+                            default:
+                                if (cadena != "Inmediato" || cadena != "Inmediato1") {
+                                    System.out.println("Error, el operando no está en el rango de bits");
+                                }
+                                ban = true;
+                                break;
+                        }
+                    
                     }
+                    ban = true;
                     break;
                 default:
                     break;
@@ -463,39 +555,41 @@ public class Operando {
             return 0;
         }
     }
+
     /**
      * Metodo para validar las directivas
      * checo que base numerica es y retorno el valor en hexadecimal
+     * 
      * @param operando valor del operando en cualquier base
      * @return retorno del valor en hexadecimal mayuscula
      */
     public String Val_directivas(String operando) {
-        int dec = 0;//variable chalan para trabajar con las bases
+        int dec = 0;// variable chalan para trabajar con las bases
         String hex = null;
         switch (basesnum(operando)) {
             case 1:
-            dec = conv.hextodec(operando);
-            if (rangeInd16(dec)) {
-                hex = conv.dectohex(dec);
-            }
+                dec = conv.hextodec(operando);
+                if (rangeInd16(dec)) {
+                    hex = conv.dectohex(dec);
+                }
                 break;
             case 2:
-            dec = conv.octtodec(operando);
-            if (rangeInd16(dec)) {
-                hex = conv.dectohex(dec);
-            }
+                dec = conv.octtodec(operando);
+                if (rangeInd16(dec)) {
+                    hex = conv.dectohex(dec);
+                }
                 break;
             case 3:
-            dec = conv.bintodec(operando);
-            if (rangeInd16(dec)) {
-                hex = conv.dectohex(dec);
-            }
+                dec = conv.bintodec(operando);
+                if (rangeInd16(dec)) {
+                    hex = conv.dectohex(dec);
+                }
                 break;
             case 4:
-            dec = Integer.parseInt(operando);
-            if (rangeInd16(dec)) {
-                hex = conv.dectohex(dec);
-            }
+                dec = Integer.parseInt(operando);
+                if (rangeInd16(dec)) {
+                    hex = conv.dectohex(dec);
+                }
                 break;
             default:
                 hex = null;
