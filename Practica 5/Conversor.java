@@ -52,4 +52,41 @@ public class Conversor {
         String num = Integer.toHexString(dec);
         return num;
     }
+
+    /**
+     * Metodo para crear cero dependiendo la longitud del hexadecimal
+     * @param valor Cadena en hexadecimal
+     * @return El Hexadecimal con los ceros necesarios a la derecha
+     */
+    public String ceros(String valor) {
+        switch (valor.length()) {
+            case 1://un solo hexadecimal en la direccion
+                valor = "000"+valor;
+                break;
+                case 2://Dos hexadecimales en la direccion
+                valor = "00"+valor;
+                break;
+                case 3://Tres hexadecimales en la direccion
+                valor = "0"+valor;
+                break;
+            default:
+                break;
+        }
+        return valor;
+    }
+    /**
+     * Metodo para crear cero dependiendo la longitud del hexadecimal
+     * @param valor Cadena en hexadecimal
+     * @return El Hexadecimal con los ceros necesarios a la derecha
+     */
+    public String ceros9bits(String valor) {
+        switch (valor.length()) {
+            case 1://un solo hexadecimal en la direccion
+                valor = "0"+valor;
+                break;
+            default:
+                break;
+        }
+        return valor;
+    }
 }

@@ -10,6 +10,7 @@ public class Operando {
     Conversor conv = new Conversor();
     Validador val = new Validador();
     int valor;
+    int cont = 0;
 
     /**
      * Método para validar el operando
@@ -19,6 +20,7 @@ public class Operando {
      * @return Retorna el ADDR
      */
     public String valOperando(String cadena, Integer oper, Integer addr2, int bpc, String addr) {
+        String ope = cadena;
         if (cadena == null) {
             cadena = "";
         }
@@ -53,7 +55,7 @@ public class Operando {
 
         // Desarrollo de la expresion regular
         // Indizados
-        ind5bits = Pattern.compile("^[-]*[0-9]+,[X|Y]$|^[-]*[0-9]+,[S]P$|^[-]*[0-9]+,[P]C$|^,[X|Y]$|^,[S]P$|,[P]C$");
+        ind5bits = Pattern.compile("^[-]*[0-9]+,[X|Y]$|^[-]*[0-9]+,[S]P$|^[-]*[0-9]+,[P]C$|^,[X|Y]$|^,[S]P$|^,[P]C$");
         buscador1 = ind5bits.matcher(cadena);
         boolean encontrado = buscador1.find();
 
@@ -66,7 +68,7 @@ public class Operando {
         buscador3 = prepost.matcher(cadena);
         boolean encontrado3 = buscador3.find();
 
-        acum = Pattern.compile("^[A|B|D]+,[X|Y]$|^[A|B|D]+,[S]P$|^[A|B|D]+,[P]C$");
+        acum = Pattern.compile("^[A|B|D]+,[X|Y]$|^[A|B|D]+,[S]P$");
         buscador4 = acum.matcher(cadena);
         boolean encontrado4 = buscador4.find();
 
@@ -106,17 +108,14 @@ public class Operando {
 
             if (range5(valor)) {
                 cadena = "IDX";
-                ban = true;
             } else if (range9(valor)) {
                 cadena = "IDX1";
-                ban = true;
             } else if (range16(valor)) {
                 cadena = "IDX2";
-                ban = true;
             } else {
                 System.out.println("Error, el tamaño de bits no corresponde a una instrucción");
             }
-
+            ban = true;
         } else if (encontrado3) {// IDX Pre-post
             int valor;
             String[] result = cadena.split(",");
@@ -124,16 +123,13 @@ public class Operando {
 
             if (rangeprepost(valor)) {
                 cadena = "IDX";
-                ban = true;
             } else {
                 System.out.println("Error, este codop debe tener un valor decimal de 1 - 8");
             }
         } else if (encontrado4) {// IDX acumulador
             cadena = "IDX";
-            ban = true;
         } else if (encontrado5) {// IDX acumulador indirecto
             cadena = "[D,IDX]";
-            ban = true;
         } else if (encontrado6) {// IDX 16bits indirecto
             String result = cadena.replaceAll("\\[", ",");
             int valor;
@@ -145,11 +141,10 @@ public class Operando {
             }
             if (rangeInd16(valor)) {
                 cadena = "[IDX2]";
-                ban = true;
             } else {
                 System.out.println("Error, este operando debe estar entre 0 - 65535");
             }
-
+            ban = true;
         } else if (encontrado7) {// Inmediato
             switch (basesnum(cadena)) {
                 case 1:// Hexadecimal
@@ -162,7 +157,6 @@ public class Operando {
                                 }else{
                                     System.out.println("Error, el operando debe de ser de 8 bits " + cadena);
                                 }
-                                ban = true;
                                 break;
                             case 2:
                                 if (range16(valor)) {
@@ -170,22 +164,18 @@ public class Operando {
                                 } else {
                                     System.out.println("Error, el operando debe ser de 16 bits "+ cadena);
                                 }
-                                ban = true;
                                 break;
                             case 3:
-                                ban = true;
                                 break;
 
                             default:
                                 if (cadena != "Inmediato" || cadena != "Inmediato1") {
                                     System.out.println("Error, el operando no está en el rango de bits");
                                 }
-                                ban = true;
                                 break;
                         }
                     
                     }
-                    ban = true;
                     break;
                 case 2:// Octal
                     if (addr.equals("Inmediato") || addr.equals("Inmediato1")) {
@@ -197,7 +187,6 @@ public class Operando {
                                 }else{
                                     System.out.println("Error, el operando debe de ser de 8 bits " + cadena);
                                 }
-                                ban = true;
                                 break;
                             case 2:
                                 if (range16(valor)) {
@@ -205,22 +194,18 @@ public class Operando {
                                 } else {
                                     System.out.println("Error, el operando debe ser de 16 bits "+ cadena);
                                 }
-                                ban = true;
                                 break;
                             case 3:
-                                ban = true;
                                 break;
 
                             default:
                                 if (cadena != "Inmediato" || cadena != "Inmediato1") {
                                     System.out.println("Error, el operando no está en el rango de bits");
                                 }
-                                ban = true;
                                 break;
                         }
                     
                     }
-                    ban = true;
                     break;
                 case 3:// Binario
                     if (addr.equals("Inmediato") || addr.equals("Inmediato1")) {
@@ -232,7 +217,6 @@ public class Operando {
                                 }else{
                                     System.out.println("Error, el operando debe de ser de 8 bits " + cadena);
                                 }
-                                ban = true;
                                 break;
                             case 2:
                                 if (range16(valor)) {
@@ -240,22 +224,18 @@ public class Operando {
                                 } else {
                                     System.out.println("Error, el operando debe ser de 16 bits "+ cadena);
                                 }
-                                ban = true;
                                 break;
                             case 3:
-                                ban = true;
                                 break;
 
                             default:
                                 if (cadena != "Inmediato" || cadena != "Inmediato1") {
                                     System.out.println("Error, el operando no está en el rango de bits");
                                 }
-                                ban = true;
                                 break;
                         }
                     
                     }
-                    ban = true;
                     break;
                 case 4:// Decimal
                     if (addr.equals("Inmediato") || addr.equals("Inmediato1")) {
@@ -268,7 +248,6 @@ public class Operando {
                                 }else{
                                     System.out.println("Error, el operando debe de ser de 8 bits " + cadena);
                                 }
-                                ban = true;
                                 break;
                             case 2:
                                 if (range16(valor)) {
@@ -276,36 +255,31 @@ public class Operando {
                                 } else {
                                     System.out.println("Error, el operando debe ser de 16 bits "+ cadena);
                                 }
-                                ban = true;
                                 break;
                             case 3:
-                                ban = true;
                                 break;
 
                             default:
                                 if (cadena != "Inmediato" || cadena != "Inmediato1") {
                                     System.out.println("Error, el operando no está en el rango de bits");
                                 }
-                                ban = true;
                                 break;
                         }
                     
                     }
-                    ban = true;
                     break;
                 default:
                     break;
             }
+            ban = true;
         } else if (encontrado8) {// DIRECTO-Extendido
             switch (basesnum(cadena)) {
                 case 1:// Hexadecimal
                     valor = conv.hextodec(cadena);
                     if (range8(valor)) {
                         cadena = "Directo";
-                        ban = true;
                     } else if (range16(valor)) {
                         cadena = "Extendido";
-                        ban = true;
                     } else {
                         System.out.println("Error de longitud de 8 o 16 bits");
                     }
@@ -314,10 +288,8 @@ public class Operando {
                     valor = conv.octtodec(cadena);
                     if (range8(valor)) {
                         cadena = "Directo";
-                        ban = true;
                     } else if (range16(valor)) {
                         cadena = "Extendido";
-                        ban = true;
                     } else {
                         System.out.println("Error de longitud de 8 o 16 bits");
                     }
@@ -326,10 +298,8 @@ public class Operando {
                     valor = conv.bintodec(cadena);
                     if (range8(valor)) {
                         cadena = "Directo";
-                        ban = true;
                     } else if (range16(valor)) {
                         cadena = "Extendido";
-                        ban = true;
                     } else {
                         System.out.println("Error de longitud de 8 o 16 bits");
                     }
@@ -338,10 +308,9 @@ public class Operando {
                     valor = Integer.parseInt(cadena);
                     if (range8(valor)) {
                         cadena = "Directo";
-                        ban = true;
                     } else if (range16(valor)) {
                         cadena = "Extendido";
-                        ban = true;
+
                     } else {
                         System.out.println("Error de longitud de 8 o 16 bits");
                     }
@@ -349,16 +318,15 @@ public class Operando {
                 default:
                     break;
             }
+            ban = true;
         } else if (encontrado9) {// EXTENDIDO con etiqueta - Relativo
             if (val.valEtiqueta(cadena) != null) {
                 switch (addr2) {
                     case 0:
                         cadena = "Extendido";
-                        ban = true;
                         break;
                     case 1:
                         cadena = "REL";
-                        ban = true;
                         break;
 
                     default:
@@ -368,14 +336,13 @@ public class Operando {
             } else {
                 System.out.println("Error operando con etiqueta");
             }
-
         } else if (cadena == "" && oper == 0) {// Inherente
             cadena = "Inherente";
             ban = true;
         }
-
-        if (!ban) {
-            System.out.println("Error en el operando");
+        if (!ban && cont < 1) {
+            System.out.println("Error en el operando " + ope);
+            ++cont;
         }
         return cadena;
     }
